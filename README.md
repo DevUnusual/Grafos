@@ -1,4 +1,7 @@
-# Grafos
-##Trabalho de grafos
-###objetivos fazer um grafo direcionado, 
-#####com metodos de impressao de kruskal e prim e que no fim permita ler o grafo de um arquivo .txt
+#Trabson de Grafos.
+##Objetivos:
+###Algoritmo de Kruskal.
+###Algoritmo de Prim.
+##Bonus:
+###Fazer uma interface caso der tempo
+###para a exibição do grafo.
