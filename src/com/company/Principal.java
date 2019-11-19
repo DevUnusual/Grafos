@@ -26,7 +26,7 @@ public class Principal {
 
         System.out.println(graph);
 
-        //arvore minima com kruskal nesse caso que fiz é para ser (1-2, 1-6, 6-3, 3-4, 4-5)
+
 
         Kruskal.SS(1,graph.getGrafo());
     }
