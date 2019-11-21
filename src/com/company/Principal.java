@@ -7,6 +7,7 @@ public class Principal {
         graph.addNode(2);
         graph.addNode(3);
         graph.addNode(0);
+        
         /*graph.addNode(5);
         graph.addNode(6);
 
