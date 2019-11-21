@@ -41,56 +41,74 @@ public class Kruskal{
             System.err.println("Node não encontrado. verifique o id.");
             return ;
         }
-        //Map<Node, Integer> cam = new HashMap<>();//------------------------------------------------------------
-        ArrayList<Node> caminho = new ArrayList<>();
+        ArrayList<cam> caminho = new ArrayList<>();
         ArrayList<Integer> ignorar = new ArrayList<>();
-        caminho.add(find(id));
         ignorar.add(id);
+        //--------------------------
+        int temp = -1;
+        int ligacao = 0, peso = 0;
+        //--------------------------
 
-        int verificador = 0;
-        Node temp = null;
-        Node Principal = find(id);
-        for(int x : ligacoes(id)){
-            if(verificador ==0){
-                temp = find(x);
-                verificador++;
+        for(int atual : find(id).getLigacoes()){//procurar a primeira ligação menor relacionada ao primeiro nó.
+            if(temp == -1){
+                ligacao = atual;
+                peso = find(atual).getPeso(id);
+                temp++;
+            }else if(find(atual).getPeso(id) < peso){
+                ligacao = atual;
+                peso = find(atual).getPeso(id);
             }
-            else if(temp.getPeso(id) > find(x).getPeso(id)) temp = find(x);
         }
-        caminho.add(temp);
-        ignorar.add(temp.getId());
+
+        ignorar.add(ligacao);//adicionar o menor a lista de ignorar
+        caminho.add(new cam(id, ligacao));//atualizar caminho com a primeira aresta
+
+
+
         caminho = kruskal(caminho, ignorar);
-        System.out.println("Arvore Minima encontrada Iniciando de: " + id + ":");
-        System.out.print("Caminho:");
-        for(Node x : caminho){
-            System.out.print(" "+x.getId() +" ->");
-        }
+        System.out.println("Arvore Minima encontrada Iniciando de " + id + ":");
+        System.out.print("Caminho: ");
+        for(cam x : caminho)
+        System.out.print(x);
     }
 
 
-    private static ArrayList<Node> kruskal(ArrayList<Node> caminho, ArrayList<Integer> ignorar){
+    private static ArrayList<cam> kruskal(ArrayList<cam> caminho, ArrayList<Integer> ignorar){
         if(finish(ignorar)){
             return caminho;
         }
-        int verificador = 0;
-        Node temp = null;
-        int id;
-        for (Node x : caminho) {
-            for(int y : ligacoes(x.getId())){
-                if(!ignorar.contains(y)) {
-                    if (verificador == 0) {
-                        temp = find(y);
-                        id = x.getId();
-                        verificador++;
-                    } else if ((find(y).getPeso(x.getId()) < temp.getPeso(x.getId()))) {
-                        temp = find(y);
-                        id = x.getId();
-                    }
+
+        //--------------------------
+        int temp = -1;
+        int ligacao = 0, peso = 0;
+        int id=0;
+        boolean atribuir = false;
+        //--------------------------
+
+        for(int node : ignorar) {
+            for (int liga : find(node).getLigacoes()) {
+                if(node != liga && !ignorar.contains(liga))
+                if (temp == -1 ) {
+                    id = node;
+                    ligacao = liga;
+                    peso = find(node).getPeso(liga);
+                    atribuir = true;
+                    temp++;
+                } else if (find(node).getPeso(liga) < peso) {
+                    id = node;
+                    ligacao = liga;
+                    peso = find(node).getPeso(liga);
+                    atribuir = true;
                 }
             }
+//            if (temp != -1) temp = -1;
         }
-        caminho.add(temp);
-        ignorar.add(temp.getId());
+
+        if(atribuir){
+            ignorar.add(ligacao);
+            caminho.add(new cam(id, ligacao));
+        }
+
         return kruskal(caminho, ignorar);
     }
 }

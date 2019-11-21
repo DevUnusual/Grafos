@@ -1,9 +1,9 @@
 package com.company;
 
-public class arcos {
+public class aresta {
     private int peso;
     private Node no;
-    public arcos(Node i, int pes){
+    public aresta(Node i, int pes){
         no = i;
         peso = pes;
     }
