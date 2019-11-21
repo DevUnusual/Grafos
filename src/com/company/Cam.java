@@ -2,11 +2,11 @@ package com.company;
 
 import java.util.ArrayList;
 
-public class cam {
+public class Cam {
     private int ID_principal, ID_ligacao;
 //    private ArrayList<cam> caminho = new ArrayList<>();
 
-    public cam(int remetente, int destino){
+    public Cam(int remetente, int destino){
         ID_principal = remetente;
         ID_ligacao = destino;
     }

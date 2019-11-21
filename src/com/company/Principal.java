@@ -27,6 +27,6 @@ public class Principal {
         System.out.println(graph);
 
 
-        Kruskal.SS(1,graph.getGrafo());
+        Prim.SS(1,graph.getGrafo());
     }
 }

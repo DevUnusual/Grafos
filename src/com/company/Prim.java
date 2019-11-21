@@ -2,9 +2,9 @@ package com.company;
 
 import java.util.ArrayList;
 
-public class Kruskal{
+public class Prim {
     private static ArrayList<Node> graph ;
-    public static void SS(int i, ArrayList<Node> grap){graph=grap;kruskal(i);}
+    public static void SS(int i, ArrayList<Node> grap){graph=grap;prim(i);}
 //    public Kruskal(ArrayList<Node> grafo){
 //        graph = grafo;
 //    }
@@ -36,12 +36,12 @@ public class Kruskal{
 
     }
 
-    private static void kruskal(int id){//id por onde começar
+    private static void prim(int id){//id por onde começar
         if(find(id) == null) {
             System.err.println("Node não encontrado. verifique o id.");
             return ;
         }
-        ArrayList<cam> caminho = new ArrayList<>();
+        ArrayList<Cam> caminho = new ArrayList<>();
         ArrayList<Integer> ignorar = new ArrayList<>();
         ignorar.add(id);
         //--------------------------
@@ -61,19 +61,19 @@ public class Kruskal{
         }
 
         ignorar.add(ligacao);//adicionar o menor a lista de ignorar
-        caminho.add(new cam(id, ligacao));//atualizar caminho com a primeira aresta
+        caminho.add(new Cam(id, ligacao));//atualizar caminho com a primeira aresta
 
 
 
-        caminho = kruskal(caminho, ignorar);
+        caminho = prim(caminho, ignorar,id, ligacao);
         System.out.println("Arvore Minima encontrada Iniciando de " + id + ":");
         System.out.print("Caminho: ");
-        for(cam x : caminho)
+        for(Cam x : caminho)
         System.out.print(x);
     }
 
 
-    private static ArrayList<cam> kruskal(ArrayList<cam> caminho, ArrayList<Integer> ignorar){
+    private static ArrayList<Cam> prim(ArrayList<Cam> caminho, ArrayList<Integer> ignorar, int inicio, int fim){
         if(finish(ignorar)){
             return caminho;
         }
@@ -83,9 +83,12 @@ public class Kruskal{
         int ligacao = 0, peso = 0;
         int id=0;
         boolean atribuir = false;
+        int []in_end = new int[2];
+        in_end[0] = inicio;
+        in_end[1] = fim;
         //--------------------------
 
-        for(int node : ignorar) {
+        for(int node : in_end) {
             for (int liga : find(node).getLigacoes()) {
                 if(node != liga && !ignorar.contains(liga))
                 if (temp == -1 ) {
@@ -106,9 +109,14 @@ public class Kruskal{
 
         if(atribuir){
             ignorar.add(ligacao);
-            caminho.add(new cam(id, ligacao));
+            caminho.add(new Cam(id, ligacao));
+            if(id == inicio) {
+                inicio = ligacao;
+            }else{
+                fim = ligacao;
+            }
         }
 
-        return kruskal(caminho, ignorar);
+        return prim(caminho, ignorar, inicio, fim);
     }
 }
