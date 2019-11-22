@@ -61,7 +61,7 @@ public class Prim {
         }
 
         ignorar.add(ligacao);//adicionar o menor a lista de ignorar
-        caminho.add(new Cam(id, ligacao));//atualizar caminho com a primeira aresta
+        caminho.add(new Cam(id, ligacao, peso));//atualizar caminho com a primeira aresta
 
 
 
@@ -109,7 +109,7 @@ public class Prim {
 
         if(atribuir){
             ignorar.add(ligacao);
-            caminho.add(new Cam(id, ligacao));
+            caminho.add(new Cam(id, ligacao, peso));
             if(id == inicio) {
                 inicio = ligacao;
             }else{

@@ -6,12 +6,12 @@ import java.util.Collections;
 
 public class Node {
     private int id;
-    private ArrayList<aresta> no = new ArrayList<aresta>();
+    private ArrayList<Aresta> no = new ArrayList<Aresta>();
 
     public Node(int num){ id = num; }
     
     private boolean repetido(Node x){//node para ser verificado
-        for(aresta y : no){
+        for(Aresta y : no){
             if(y.getNoId() == x.id) return false;
         }
         return true;
@@ -21,7 +21,7 @@ public class Node {
         if(peso < 0){
             System.out.println("nao é permitido a atribuição negativa.");
         }else if(repetido(x)){
-            if(x.getId() != id) no.add(new aresta(x, peso));
+            if(x.getId() != id) no.add(new Aresta(x, peso));
             if(this != x) x.addAresta(this, peso);
         }
     }
@@ -32,7 +32,7 @@ public class Node {
 
     public ArrayList<Integer> getLigacoes(){
         ArrayList<Integer> ids = new ArrayList<>();
-        for(aresta x : no){
+        for(Aresta x : no){
             ids.add(x.getNoId());
         }
         Collections.sort(ids);
@@ -40,7 +40,7 @@ public class Node {
     }
 
     public int getPeso(int id){
-        for(aresta x : no){
+        for(Aresta x : no){
             if(x.getNoId() == id) return x.getPeso();
         }
         return -1;
@@ -50,7 +50,7 @@ public class Node {
     public String toString() {
         String a = "Node "+ id + " Ligações:\n";
         if(!no.isEmpty())
-        for(aresta x : no){
+        for(Aresta x : no){
             a += (x.toString() + "\n");
         }
         else{

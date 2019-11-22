@@ -1,5 +1,7 @@
 package com.company;
 
+import java.util.Collections;
+
 public class Principal {
     public static void main(String[] args) {
         Grafo graph = new Grafo();
@@ -26,7 +28,11 @@ public class Principal {
 
         System.out.println(graph);
 
-
+        System.out.println("Prim algorit:");
         Prim.SS(1,graph.getGrafo());
+
+        Kruskal k = new Kruskal();
+        System.out.println("\n kruskal Algoritmo:");
+        System.out.println(k.kruskal(graph));
     }
 }

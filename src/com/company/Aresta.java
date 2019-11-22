@@ -1,9 +1,9 @@
 package com.company;
 
-public class aresta {
+public class Aresta {
     private int peso;
     private Node no;
-    public aresta(Node i, int pes){
+    public Aresta(Node i, int pes){
         no = i;
         peso = pes;
     }
