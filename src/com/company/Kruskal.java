@@ -39,6 +39,15 @@ public class Kruskal {
             }
             return true;
         }
+        public boolean triangulo(Cam atual, Cam primario, Cam secundario){
+        int restoPrimario = -1, restoSecundario = -1;
+        if(atual.getID_principal() == primario.getID_principal() || atual.getID_ligacao() == primario.getID_principal()) restoPrimario = primario.getID_ligacao();
+        if(atual.getID_principal() == primario.getID_ligacao() || atual.getID_ligacao() == primario.getID_ligacao()) restoPrimario = primario.getID_principal();
+        if(atual.getID_ligacao() == secundario.getID_principal() || atual.getID_ligacao() == secundario.getID_principal()) restoSecundario = secundario.getID_ligacao();
+        if(atual.getID_ligacao() == secundario.getID_ligacao() || atual.getID_ligacao() == secundario.getID_ligacao()) restoSecundario = secundario.getID_principal();
+        if(restoPrimario == restoSecundario || restoPrimario == -1 || restoSecundario == -1) return true;
+        return false;
+        }
 
         private boolean cicle(Cam atual, ArrayList<Cam> caminho ){
             int principal = atual.getID_principal();
@@ -47,23 +56,14 @@ public class Kruskal {
                 if(inicio == atual) continue;
                 if(principal == inicio.getID_principal() || principal == inicio.getID_ligacao()){
                     for(Cam meio : caminho){
-                        if(inicio.getID_principal() == meio.getID_principal() ){
-                            if(principal == meio.getID_principal())
-                                return false;
-                        }
-                        if( inicio.getID_principal() == meio.getID_ligacao()){
-                            if(liga == meio.getID_ligacao())
-                                return false;
-                        }
+                        if(inicio == meio) continue;
+                        if(inicio.getID_principal() == meio.getID_principal() && liga == meio.getID_ligacao())
                     }
                 }if(liga == inicio.getID_principal() || liga == inicio.getID_ligacao()){
                     for(Cam meio : caminho){
-                        if(inicio.getID_ligacao() == meio.getID_principal() ){
-                            if(principal == meio.getID_principal())
-                                return false;
-                        }
-                        if( inicio.getID_ligacao() == meio.getID_ligacao()){
-                            if(liga == meio.getID_ligacao())
+                        if(inicio == meio) continue;
+                        if(inicio.getID_ligacao() == meio.getID_principal() || liga == meio.getID_ligacao() ){
+                            if(triangulo(atual, inicio, meio))
                                 return false;
                         }
                     }
