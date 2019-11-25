@@ -12,7 +12,7 @@ public class Grafo{
         return true;
     }
 
-    private Node find(int x){
+    public Node find(int x){
         for(Node i : graph){
             if(x == i.getId()) return i;
         }
@@ -46,47 +46,4 @@ public class Grafo{
         return x;
     }
 
-
-
-/*    public boolean ciclo(ArrayList<Integer> ids, int id){
-
-    }
-    public String Kruskal(int id){//qual node iniciar
-        ArrayList<Integer> ids = new ArrayList<>();
-        ArrayList<Integer> caminho = new ArrayList<>();
-        ids.addAll(ligacoes(id));
-        caminho.add(id);
-
-        int verificador = 0;
-        int []temp = new int[2];
-        Node principal = find(id);
-        for (int i : ids){
-            if(verificador==0) temp = new int[]{i, principal.getPeso(i)};
-            else if( principal.getPeso(i)> temp[1]) temp = new int[]{i, principal.getPeso(i)};
-        }
-        kruskal(id, temp[0], ids, caminho);
-        return "";
-    }
-
-    private ArrayList<Integer> kruskal(int id ,int id2, ArrayList<Integer> ligacoes, ArrayList<Integer> caminho){//id do node 1, id do node 2, array de ligações, array do caminho ja percorrido
-        if(ligKruskal(caminho, id, id2)){
-            caminho.add(id);
-            return caminho;
-        }
-        int verificador =0;
-        int []temp = new int[2];
-        Node principal = find(id);
-        for (int i : ligacoes){
-            if(verificador==0) temp = new int[]{i, principal.getPeso(i)};
-            else if( principal.getPeso(i)> temp[1]) temp = new int[]{i, principal.getPeso(i)};
-        }
-//            Node y = find(i);
-        return null;
-    }
-
-    private boolean ligKruskal(ArrayList<Integer> caminho, int id1, int id2) {
-        ArrayList<Integer>[] ligacoes = new ArrayList[caminho.size()];]
-
-
-    }*/
 }

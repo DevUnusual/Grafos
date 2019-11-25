@@ -6,7 +6,7 @@ import java.util.Collections;
 public class Kruskal {
         private static ArrayList<Node> graph ;
 
-        private static Node find(int x){
+        private Node find(int x){
             for(Node i : graph){
                 if(x == i.getId()) return i;
             }
@@ -39,36 +39,34 @@ public class Kruskal {
             }
             return true;
         }
-        public boolean triangulo(Cam atual, Cam primario, Cam secundario){
-        int restoPrimario = -1, restoSecundario = -1;
-        if(atual.getID_principal() == primario.getID_principal() || atual.getID_ligacao() == primario.getID_principal()) restoPrimario = primario.getID_ligacao();
-        if(atual.getID_principal() == primario.getID_ligacao() || atual.getID_ligacao() == primario.getID_ligacao()) restoPrimario = primario.getID_principal();
-        if(atual.getID_ligacao() == secundario.getID_principal() || atual.getID_ligacao() == secundario.getID_principal()) restoSecundario = secundario.getID_ligacao();
-        if(atual.getID_ligacao() == secundario.getID_ligacao() || atual.getID_ligacao() == secundario.getID_ligacao()) restoSecundario = secundario.getID_principal();
-        if(restoPrimario == restoSecundario || restoPrimario == -1 || restoSecundario == -1) return true;
-        return false;
+
+        public void dePara(Cam atual, ArrayList<Cam> primario, ArrayList<Cam> secundario, ArrayList<Cam> caminho ){
+            for(Cam x : primario) {
+                int id = (atual.getID_principal() == x.getID_principal()) ? x.getID_ligacao() : x.getID_principal();
+                for (int y : find(id).getLigacoes()) {
+
+                }
+            }
+        }
+        public boolean triangulo(Cam atual, ArrayList<Cam> primario, ArrayList<Cam> secundario, ArrayList<Cam> caminho ){
+
         }
 
         private boolean cicle(Cam atual, ArrayList<Cam> caminho ){
             int principal = atual.getID_principal();
             int liga = atual.getID_ligacao();
+            ArrayList<Cam> ligacoesPrincipal = new ArrayList<>();
+            ArrayList<Cam> ligacoesSecundaria = new ArrayList<>();
             for(Cam inicio : caminho){
+                int prin, li;
+                prin = inicio.getID_principal();
+                li = inicio.getID_ligacao();
                 if(inicio == atual) continue;
-                if(principal == inicio.getID_principal() || principal == inicio.getID_ligacao()){
-                    for(Cam meio : caminho){
-                        if(inicio == meio) continue;
-                        if(inicio.getID_principal() == meio.getID_principal() && liga == meio.getID_ligacao())
-                    }
-                }if(liga == inicio.getID_principal() || liga == inicio.getID_ligacao()){
-                    for(Cam meio : caminho){
-                        if(inicio == meio) continue;
-                        if(inicio.getID_ligacao() == meio.getID_principal() || liga == meio.getID_ligacao() ){
-                            if(triangulo(atual, inicio, meio))
-                                return false;
-                        }
-                    }
-                }
-            }
+                if(principal == prin || principal == li) ligacoesPrincipal.add(inicio);
+                if(liga == prin || liga == li) ligacoesSecundaria.add(inicio);
+        }
+            if(triangulo(atual, ligacoesPrincipal, ligacoesSecundaria), caminho) return false;
+
             return true;
         }
 
@@ -111,5 +109,7 @@ public class Kruskal {
             }
             return caminho;
         }
+
+
 
 }
