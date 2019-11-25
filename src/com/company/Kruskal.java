@@ -13,7 +13,7 @@ public class Kruskal {
             return null;
         }
 
-        private static ArrayList<Integer> ligacoes(int id){//retorna as ligaçoes ordenadas
+        private ArrayList<Integer> ligacoes(int id){//retorna as ligaçoes ordenadas
             Node a = find(id);
             if(a==null){
                 return null;
@@ -21,7 +21,7 @@ public class Kruskal {
             return a.getLigacoes();
         }
 
-        private static boolean finish(ArrayList<Integer> ignorar){
+        /*private boolean finish(ArrayList<Integer> ignorar){
             ArrayList<Integer> no = new ArrayList<>();
             for(Node x : graph){
                 no.add(x.getId());
@@ -30,7 +30,7 @@ public class Kruskal {
                 return true;
             }
             return false;
-        }
+        }*/
 
         public boolean dup(int x, int y, ArrayList<Cam> nos){
             for(Cam node : nos){
@@ -40,32 +40,28 @@ public class Kruskal {
             return true;
         }
 
-        public void dePara(Cam atual, ArrayList<Cam> primario, ArrayList<Cam> secundario, ArrayList<Cam> caminho ){
-            for(Cam x : primario) {
-                int id = (atual.getID_principal() == x.getID_principal()) ? x.getID_ligacao() : x.getID_principal();
-                for (int y : find(id).getLigacoes()) {
-
-                }
+        public ArrayList<Cam> linkActive(ArrayList<Cam> caminho, int id){
+            ArrayList<Cam> ativos = new ArrayList<>();
+            for(Cam i : caminho){
+                if(i.getID_principal() == id || i.getID_ligacao() == id) ativos.add(i);
             }
+            return ativos;
         }
-        public boolean triangulo(Cam atual, ArrayList<Cam> primario, ArrayList<Cam> secundario, ArrayList<Cam> caminho ){
 
+        public boolean ciclo(int atual, ArrayList<Cam> caminho , ArrayList<Integer> ignorar, int fim){
+            int []pos = {atual, fim};
+            if(atual == fim ) return true;
+            for(Cam inicio : linkActive(caminho, pos[0])){
+                int alvo = (pos[0] == inicio.getID_principal()) ? inicio.getID_ligacao():inicio.getID_principal();
+                if(ignorar.contains(alvo)) continue;
+                ignorar.add(alvo);
+                return ciclo(pos[0],caminho,ignorar, fim);
+            }
+            return false;
         }
 
         private boolean cicle(Cam atual, ArrayList<Cam> caminho ){
-            int principal = atual.getID_principal();
-            int liga = atual.getID_ligacao();
-            ArrayList<Cam> ligacoesPrincipal = new ArrayList<>();
-            ArrayList<Cam> ligacoesSecundaria = new ArrayList<>();
-            for(Cam inicio : caminho){
-                int prin, li;
-                prin = inicio.getID_principal();
-                li = inicio.getID_ligacao();
-                if(inicio == atual) continue;
-                if(principal == prin || principal == li) ligacoesPrincipal.add(inicio);
-                if(liga == prin || liga == li) ligacoesSecundaria.add(inicio);
-        }
-            if(triangulo(atual, ligacoesPrincipal, ligacoesSecundaria), caminho) return false;
+            if(ciclo(atual.getID_principal(),caminho,new ArrayList<Integer>(),atual.getID_ligacao())) return false;
 
             return true;
         }
