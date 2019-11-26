@@ -1,5 +1,6 @@
 package com.company;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -21,48 +22,11 @@ public class Kruskal {
             return a.getLigacoes();
         }
 
-        /*private boolean finish(ArrayList<Integer> ignorar){
-            ArrayList<Integer> no = new ArrayList<>();
-            for(Node x : graph){
-                no.add(x.getId());
-            }
-            if(ignorar.containsAll(no)){
-                return true;
-            }
-            return false;
-        }*/
-
         public boolean dup(int x, int y, ArrayList<Cam> nos){
             for(Cam node : nos){
                 if(node.getID_principal()==x && node.getID_ligacao()==y || node.getID_principal()==y && node.getID_ligacao()==x)
                     return false;
             }
-            return true;
-        }
-
-        public ArrayList<Cam> linkActive(ArrayList<Cam> caminho, int id){
-            ArrayList<Cam> ativos = new ArrayList<>();
-            for(Cam i : caminho){
-                if(i.getID_principal() == id || i.getID_ligacao() == id) ativos.add(i);
-            }
-            return ativos;
-        }
-
-        public boolean ciclo(int atual, ArrayList<Cam> caminho , ArrayList<Integer> ignorar, int fim){
-            int []pos = {atual, fim};
-            if(atual == fim ) return true;
-            for(Cam inicio : linkActive(caminho, pos[0])){
-                int alvo = (pos[0] == inicio.getID_principal()) ? inicio.getID_ligacao():inicio.getID_principal();
-                if(ignorar.contains(alvo)) continue;
-                ignorar.add(alvo);
-                return ciclo(pos[0],caminho,ignorar, fim);
-            }
-            return false;
-        }
-
-        private boolean cicle(Cam atual, ArrayList<Cam> caminho ){
-            if(ciclo(atual.getID_principal(),caminho,new ArrayList<Integer>(),atual.getID_ligacao())) return false;
-
             return true;
         }
 
@@ -90,17 +54,23 @@ public class Kruskal {
             return nodes;
         }
 
-
         public ArrayList<Cam> kruskal(Grafo g){
             ArrayList<Cam> ordenado = ordenacaoGraph(g);
             ArrayList<Cam> caminho = new ArrayList<>();
+            ArrayList<Integer> ignorar = new ArrayList<>();
             int marcador =0;
             for(Cam menor : ordenado){
                 if(marcador == 0){
                     marcador++;
                     caminho.add(menor);
-                }else if(cicle(menor, caminho)){
+                    ignorar.add(menor.getID_principal());
+                    ignorar.add(menor.getID_ligacao());
+                }
+                if(!(ignorar.contains(menor.getID_ligacao())&& ignorar.contains(menor.getID_principal()))){
                     caminho.add(menor);
+                    if(!ignorar.contains(menor.getID_principal())){
+                        ignorar.add(menor.getID_principal());
+                    }else ignorar.add(menor.getID_ligacao());
                 }
             }
             return caminho;

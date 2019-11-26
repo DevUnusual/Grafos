@@ -1,6 +1,7 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Prim {
     private static ArrayList<Node> graph ;
@@ -68,6 +69,7 @@ public class Prim {
         caminho = prim(caminho, ignorar,id, ligacao);
         System.out.println("Arvore Minima encontrada Iniciando de " + id + ":");
         System.out.print("Caminho: ");
+
         for(Cam x : caminho)
         System.out.print(x);
     }
