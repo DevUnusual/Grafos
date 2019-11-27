@@ -3,9 +3,11 @@ package com.company;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Kruskal {
-        private static ArrayList<Node> graph ;
+   /*     private static ArrayList<Node> graph ;
 
         private Node find(int x){
             for(Node i : graph){
@@ -21,7 +23,7 @@ public class Kruskal {
             }
             return a.getLigacoes();
         }
-
+*/
         public boolean dup(int x, int y, ArrayList<Cam> nos){
             for(Cam node : nos){
                 if(node.getID_principal()==x && node.getID_ligacao()==y || node.getID_principal()==y && node.getID_ligacao()==x)
@@ -54,23 +56,48 @@ public class Kruskal {
             return nodes;
         }
 
+        private Map<Integer, ArrayList<Integer>> iniMap(ArrayList<Node> graph){
+            Map<Integer, ArrayList<Integer>> ignorar = new HashMap<>();
+            for(Node i : graph){
+                ignorar.put(i.getId(), new ArrayList<Integer>());
+            }
+            return ignorar;
+        }
+        private ArrayList<Integer> getMap(Map<Integer, ArrayList<Integer>> a, int id){
+            return a.get(id);
+        }
         public ArrayList<Cam> kruskal(Grafo g){
             ArrayList<Cam> ordenado = ordenacaoGraph(g);
             ArrayList<Cam> caminho = new ArrayList<>();
-            ArrayList<Integer> ignorar = new ArrayList<>();
+            Map<Integer, ArrayList<Integer>> ignorar = iniMap(g.getGrafo());
             int marcador =0;
             for(Cam menor : ordenado){
                 if(marcador == 0){
                     marcador++;
                     caminho.add(menor);
-                    ignorar.add(menor.getID_principal());
-                    ignorar.add(menor.getID_ligacao());
+
+                    ArrayList<Integer> lis = getMap(ignorar, menor.getID_principal());
+                    lis.add(menor.getID_ligacao());
+                    ignorar.put(menor.getID_principal(),lis);
+
+                    lis = ignorar.get(menor.getID_ligacao());
+                    lis.add(menor.getID_principal());
+                    ignorar.put(menor.getID_ligacao(),lis);
                 }
-                if(!(ignorar.contains(menor.getID_ligacao())&& ignorar.contains(menor.getID_principal()))){
-                    caminho.add(menor);
-                    if(!ignorar.contains(menor.getID_principal())){
-                        ignorar.add(menor.getID_principal());
-                    }else ignorar.add(menor.getID_ligacao());
+                if(!(ignorar.get(menor.getID_ligacao()).contains(menor.getID_principal()) &&
+                        ignorar.get(menor.getID_principal()).contains(menor.getID_ligacao()))){
+
+                    if(!getMap(ignorar,menor.getID_principal()).contains(menor.getID_ligacao())){
+                        ArrayList<Integer> lis = ignorar.get(menor.getID_principal());
+                        lis.add(menor.getID_ligacao());
+                        ignorar.put(menor.getID_principal(), lis);
+                        caminho.add(menor);
+                    }else{
+                        ArrayList<Integer> lis = ignorar.get(menor.getID_ligacao());
+                        lis.add(menor.getID_principal());
+                        ignorar.put(menor.getID_ligacao(), lis);
+                        caminho.add(menor);
+                    }
                 }
             }
             return caminho;

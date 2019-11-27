@@ -10,7 +10,7 @@ public class Principal {
         graph.addNode(3);
         graph.addNode(4);
         graph.addNode(5);
-        graph.addNode(6);
+        /*graph.addNode(6);
         graph.addNode(7);
 
         graph.ligar(1,2,2);
@@ -24,7 +24,19 @@ public class Principal {
         graph.ligar(3,5,4);
         graph.ligar(4,5,1);
         graph.ligar(4,7,5);
-        graph.ligar(5,7,7);
+        graph.ligar(5,7,7);*/
+        graph.ligar(1,2,3);
+        graph.ligar(1,5,5);
+        graph.ligar(2,3,8);
+        graph.ligar(2,5,1);
+        graph.ligar(1,3,1);
+        graph.ligar(3,4,10);
+        graph.ligar(5,4,2);
+
+
+
+
+
 
         System.out.println(graph);
 
